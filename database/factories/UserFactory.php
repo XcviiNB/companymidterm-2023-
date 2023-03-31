@@ -23,7 +23,6 @@ class UserFactory extends Factory
         return [
             'username'      => $fname,
             'fullname'      => $fname . " " . $lname,
-            'designation'   => fake()->jobTitle,
             'password'      => bcrypt('password')
         ];
     }

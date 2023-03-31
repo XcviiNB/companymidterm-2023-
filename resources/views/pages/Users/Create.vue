@@ -10,14 +10,9 @@
                 <div class="text-sm text-red-500 italic mt-1" v-if="form.errors.username">{{ form.errors.username }}</div>
             </div>
             <div class="mb-4">
-                <label for="fullname" class="block font-medium text-black mb-2">Fullname</label>
+                <label for="fullname" class="block font-medium text-black mb-2">Full Name</label>
                 <input v-model="form.fullname" fullname="text" id="fullname" name="fullname" class="w-full border border-gray-400 rounded-md shadow-sm" />
                 <div class="text-sm text-red-500 italic mt-1" v-if="form.errors.fullname">{{ form.errors.fullname }}</div>
-            </div>
-            <div class="mb-4">
-                <label for="designation" class="block font-medium text-black mb-2">Designation</label>
-                <input v-model="form.designation" type="text" id="designation" name="designation" class="w-full border border-gray-400 rounded-md shadow-sm" />
-                <div class="text-sm text-red-500 italic mt-1" v-if="form.errors.designation">{{ form.errors.designation }}</div>
             </div>
             <div class="mb-4">
                 <label for="password" class="block font-medium text-black mb-2">Password</label>
@@ -42,7 +37,6 @@ import {Link} from '@inertiajs/inertia-vue3'
 let form = useForm({
     username:'',
     fullname:'',
-    designation:'',
     password:''
 })
 

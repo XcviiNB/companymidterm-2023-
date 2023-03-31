@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Company Archive</title>
+		<title>NTerprises</title>
         <script src="https://kit.fontawesome.com/df9f7c369a.js" crossorigin="anonymous"></script>
 		@vite
 	</head>

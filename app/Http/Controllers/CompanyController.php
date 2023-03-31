@@ -19,7 +19,7 @@ class CompanyController extends Controller
 
     public function store(Request $request) {
         $request->validate([
-            'name'      => 'required',
+            'name'      => 'required|unique:companies',
             'type'      => 'required',
             'address'   => 'required',
             'net_worth' => 'required'
@@ -43,7 +43,7 @@ class CompanyController extends Controller
 
     public function update(Request $request, Company $company) {
         $editField = $request->validate([
-            'name'      => 'required',
+            'name'      => 'required|unique:companies,name',
             'type'      => 'required',
             'address'   => 'required',
             'net_worth' => 'required'
