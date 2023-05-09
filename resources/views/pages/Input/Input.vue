@@ -1,11 +1,11 @@
 <template layout="default">
   <div class="flex justify-center items-center">
-    <ConfirmDialog v-if="showConfirm"
+    <InputDialog v-if="showConfirm"
       title="Message"
       :message="confirmMessage"
       @confirm="okay"
       @close="showConfirm = false"
-    ></ConfirmDialog>
+    ></InputDialog>
     <div class="text-center">
       <div class="mb-4">
         <textarea class="border rounded px-2 py-1 w-64 h-32" placeholder="Enter text here" v-model="confirmMessage"></textarea>
@@ -18,7 +18,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import ConfirmDialog from '@/views/components/input-dialog.vue';
+import InputDialog from '@/views/components/input-dialog.vue';
 
 const showConfirm = ref(false);
 const confirmMessage = ref('');
