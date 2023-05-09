@@ -5,6 +5,7 @@
                 <Link href="/" class="text-black font-bold text-xl">NTerprises</Link>
 
                 <div class="flex items-center">
+                    <Link v-if="user" href="/inputmsg" class="py-4 text-black font-semibold hover:bg-[#ddc8a5] rounded-lg duration-300 px-2">Input Message</Link>
                     <Link v-if="user" href="/companies" class="py-4 text-black font-semibold hover:bg-[#ddc8a5] rounded-lg duration-300 px-2">Companies</Link>
                     <Link v-if="user" href="/members" class="py-4 text-black font-semibold hover:bg-[#ddc8a5] rounded-lg duration-300 px-2">Members</Link>
 

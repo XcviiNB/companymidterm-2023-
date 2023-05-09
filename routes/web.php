@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\InputController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UserController;
@@ -39,5 +40,7 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/members', [MemberController::class, 'store']);
     Route::get('/members/edit/{member}', [MemberController::class, 'edit']);
     Route::put('/members{member}', [MemberController::class, 'update']);
+
+    Route::get('/inputmsg', [InputController::class, 'inputmessage']);
 
 });
