@@ -17,5 +17,5 @@
     @apply min-h-full min-w-full flex justify-center items-center
 }
 .dialog-wrapper .dialog {
-    @apply bg-blue-400 p-4 rounded-lg min-w-[600px]
+    @apply bg-[#F9F5EB] p-4 rounded-lg min-w-[600px]
 }
