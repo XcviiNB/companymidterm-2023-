@@ -7,11 +7,11 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index() {
-        $users = User::latest('id')->get();
+    // public function index() {
+    //     $users = User::latest('id')->get();
 
-        return inertia('Users/Index', compact('users'));
-    }
+    //     return inertia('Users/Index', compact('users'));
+    // }
 
     public function create() {
         return inertia('Users/Create');

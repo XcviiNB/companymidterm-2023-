@@ -43,7 +43,7 @@ class CompanyController extends Controller
 
     public function update(Request $request, Company $company) {
         $editField = $request->validate([
-            'name'      => 'required|unique:companies,name',
+            'name'      => 'required',
             'type'      => 'required',
             'address'   => 'required',
             'net_worth' => 'required'
