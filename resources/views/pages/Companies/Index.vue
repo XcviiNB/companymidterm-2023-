@@ -1,4 +1,12 @@
 <template layout>
+    <ConfirmDialog v-if="showConfirm"
+        title="Delete Company?"
+        message="Are you sure about deleting this company file?"
+        @cancel="cancelDelete()"
+        @confirm="deleteCompany()"></ConfirmDialog>
+
+    <!-- <ErrorDialog v-if="showError" title="Error" :message="errorMessage" @close="closeErrorDialog()"></ErrorDialog> -->
+
     <div class="p-8">
         <h1 class="text-4xl flex justify-center mb-3 text-[#F9F5EB]">Companies</h1>
 
@@ -19,6 +27,7 @@
                 <td class="p-3 border-b border-l">{{ "$" + company.net_worth }}</td>
                 <td class="p-3 border-b border-l text-center">
                     <Link :href=" '/companies/edit/' + company.id"><i class="fa-regular fa-pen-to-square"></i></Link>
+                    <button class="text-red-700 px-5 rounded hover:text-indigo-900" @click="remove(company)"><i class="fa-solid fa-trash-can"></i></button>
                 </td>
             </tr>
         </table>
@@ -31,9 +40,47 @@
 </template>
 
 <script setup>
-    import {Link} from '@inertiajs/inertia-vue3'
+    import { Link } from '@inertiajs/inertia-vue3'
+    import { ref } from 'vue'
+    import ConfirmDialog from '@/views/components/confirm-dialog.vue'
+    import { useForm } from '@inertiajs/inertia-vue3'
+    // import ErrorDialog from '@/views/components/error-dialog.vue'
 
-    defineProps({
-        'companies': Array
+    let showConfirm = ref(false)
+
+    let form = useForm({
+        id: '',
+        name: '',
+        type: '',
+        address: '',
+        net_worth: '',
     })
+
+    let deleteForm = useForm()
+
+    let selectedCompany = null
+    let selectedCompanyForDelete = null
+
+    let props = defineProps({
+        companies: Array,
+        users: Array,
+        errors: null
+    })
+
+    function remove(company) {
+        selectedCompanyForDelete = company
+        showConfirm.value = true
+    }
+
+    function cancelDelete() {
+        showConfirm.value = false
+    }
+
+    function deleteCompany() {
+        if (selectedCompanyForDelete !== null && selectedCompanyForDelete.id !== undefined) {
+            deleteForm.delete('/companies/' + selectedCompanyForDelete.id)
+            showConfirm.value = false;
+        }
+    }
 </script>
+

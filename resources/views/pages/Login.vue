@@ -24,6 +24,11 @@
                 <div class="text-sm text-red-500 italic" v-if="form.errors.authentication">{{ form.errors.authentication }}</div>
 
             </form>
+            <login-dialog
+                :title="title"
+                :message="message"
+                :show-dialog="showDialog"
+            />
         </div>
     </div>
 

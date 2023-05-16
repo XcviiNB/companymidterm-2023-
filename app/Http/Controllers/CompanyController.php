@@ -53,4 +53,16 @@ class CompanyController extends Controller
 
         return redirect('/companies');
     }
+
+    public function destroy(Company $company) {
+        // if ($company->members && $company->members->count() > 0) {
+        //     return back()->withErrors(['GeneralErrors'=>"You cannot delete $company->members because it has {$company->members->count()} items."]);
+        // }
+
+        $company->delete();
+
+        return back();
+    }
+
+
 }

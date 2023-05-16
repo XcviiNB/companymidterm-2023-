@@ -1,18 +1,18 @@
 <template layout="default">
   <div class="flex justify-center items-center">
-    <InputDialog v-if="showConfirm"
-      title="Message"
-      :message="confirmMessage"
-      @confirm="okay"
-      @close="showConfirm = false"
-    ></InputDialog>
-    <div class="text-center">
-      <div class="mb-4">
-        <textarea class="border rounded px-2 py-1 w-64 h-32" placeholder="Enter text here" v-model="confirmMessage"></textarea>
-      </div>
-      <button class="bg-blue-500 px-4 py-2 rounded-md text-white text-sm shadow-md hover:shadow-lg" @click="show">Show</button>
+        <InputDialog v-if="showConfirm"
+        title="Message"
+        :message="confirmMessage"
+        @confirm="okay"
+        @close="showConfirm = false"
+        ></InputDialog>
+        <div class="text-center">
+            <div class="mb-4">
+                <textarea class="border rounded px-2 py-1 w-64 h-32" placeholder="Enter text here" v-model="confirmMessage"></textarea>
+            </div>
+            <button class="bg-blue-500 px-4 py-2 rounded-md text-white text-sm shadow-md hover:shadow-lg" @click="show">Show</button>
+        </div>
     </div>
-  </div>
 </template>
 
 
