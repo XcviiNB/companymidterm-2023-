@@ -89,15 +89,13 @@
     async function deleteCompany() {
       if (selectedCompanyForDelete !== null && selectedCompanyForDelete.id !== undefined) {
         try {
-          await deleteForm.delete('/companies/' + selectedCompanyForDelete.id)
-          deleteConfirmed.value = true
-          showConfirm.value = false
-
-          // Handle success case in watchEffect
+            await deleteForm.delete('/companies/' + selectedCompanyForDelete.id)
+            deleteConfirmed.value = true
+            showConfirm.value = false
         } catch (error) {
-          errorMessage.value = error.message
-          showConfirm.value = false
-          showError.value = true
+            errorMessage.value = error.message
+            showConfirm.value = false
+            showError.value = true
         }
       }
     }
@@ -115,18 +113,15 @@
     watchEffect(() => {
         if (deleteConfirmed.value == true) {
             if (Object.keys(props.errors).length === 0) {
-            // Display SuccessDialog only when deleteConfirmed is true and there are no errors
-            showSuccess.value = true
-            successMessage.value = 'Company removed successfully'
-            showError.value = false // Ensure showError is set to false
+                showSuccess.value = true
+                successMessage.value = 'Company removed successfully'
+                showError.value = false
             } else if (props.errors && props.errors.GeneralErrors) {
-            // Display ErrorDialog only when deleteConfirmed is true and there is an error in props.errors.GeneralErrors
-            showSuccess.value = false // Ensure showSuccess is set to false
-            showError.value = true
-            errorMessage.value = props.errors.GeneralErrors
+                showSuccess.value = false
+                showError.value = true
+                errorMessage.value = props.errors.GeneralErrors
             }
         } else {
-            // Reset the dialogs
             showSuccess.value = false
             showError.value = false
         }
