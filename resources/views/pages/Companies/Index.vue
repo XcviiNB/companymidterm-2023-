@@ -116,7 +116,7 @@
                 showSuccess.value = true
                 successMessage.value = 'Company removed successfully'
                 showError.value = false
-            } else if (props.errors && props.errors.GeneralErrors) {
+            } else {
                 showSuccess.value = false
                 showError.value = true
                 errorMessage.value = props.errors.GeneralErrors
