@@ -1,39 +1,134 @@
 <template layout>
-    <div class="p-8">
-        <h1 class="text-4xl flex justify-center mb-3 text-[#F9F5EB]">Members</h1>
+    <div>
+      <ConfirmDialog v-if="showConfirm" title="Delete Company?" message="Are you sure about deleting this company file?" @cancel="cancelDelete" @confirm="deleteCompany"></ConfirmDialog>
 
-        <table class="mx-auto table-auto mt-4">
-            <tr class="bg-[#E4DCCF] text-black">
-                <th class="font-bold p-2 border-b text-center">Member ID</th>
-                <th class="font-bold p-2 border-b">Last Name</th>
-                <th class="font-bold p-2 border-b">First Name</th>
-                <th class="font-bold p-2 border-b text-center">Designation</th>
-                <th class="font-bold p-2 border-b text-center">Company</th>
-                <th class="font-bold p-2 border-b text-center">Options</th>
-            </tr>
-            <tr v-for="member of members" class="bg-[#F9F5EB] hover:bg-[#E4DCCF]">
-                <td class="p-3 border-b border-l">{{ ('0000' + member.id).slice(-4) }}</td>
-                <td class="p-3 border-b border-l">{{ member.last_name }}</td>
-                <td class="p-3 border-b border-l">{{ member.first_name }}</td>
-                <td class="p-3 border-b border-l">{{ member.designation }}</td>
-                <td class="p-3 border-b border-l">{{ member.company.name }}</td>
-                <td class="p-3 border-b border-l text-center">
-                    <Link :href=" '/members/edit/' + member.id"><i class="fa-solid fa-user-pen"></i></Link>
-                </td>
-            </tr>
+      <ErrorDialog v-if="showError" :message="errorMessage" @close="closeErrorDialog"></ErrorDialog>
+      <SuccessDialog v-if="showSuccess" :message="successMessage" @close="closeSuccessDialog"></SuccessDialog>
+
+      <div class="p-8">
+        <h1 class="text-4xl flex justify-center mb-3 text-[#F9F5EB]">Companies</h1>
+
+        <table class="mx-auto mt-4 border border-[#E4DCCF] rounded-lg">
+          <tr class="bg-[#E4DCCF] text-black">
+            <th class="font-bold p-2 border-b text-center">Company ID</th>
+            <th class="font-bold p-2 border-b">Name</th>
+            <th class="font-bold p-2 border-b text-center">Type</th>
+            <th class="font-bold p-2 border-b text-center">Address</th>
+            <th class="font-bold p-2 border-b text-center">Net Worth</th>
+            <th class="font-bold p-2 border-b text-center">Options</th>
+          </tr>
+          <tr v-for="company of companies" :key="company.id" class="bg-[#F9F5EB] hover:bg-[#E4DCCF]">
+            <td class="p-3 border-b border-l">{{ ('0000' + company.id).slice(-4) }}</td>
+            <td class="p-3 border-b border-l">{{ company.name }}</td>
+            <td class="p-3 border-b border-l">{{ company.type }}</td>
+            <td class="p-3 border-b border-l">{{ company.address }}</td>
+            <td class="p-3 border-b border-l">{{ "$" + company.net_worth }}</td>
+            <td class="p-3 border-b border-l text-center">
+              <Link :href="'/companies/edit/' + company.id">
+                <i class="fa-regular fa-pen-to-square"></i>
+              </Link>
+              <button class="text-red-700 px-5 rounded hover:text-indigo-900" @click="remove(company)">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </td>
+          </tr>
         </table>
 
         <div class="flex mt-3">
-            <Link href="/members/create" class="bg-[#F9F5EB] hover:bg-[#E4DCCF] text-black font-bold py-2 px-4 rounded mx-auto">Add New Member</Link>
+          <Link href="/companies/create" class="bg-[#F9F5EB] hover:bg-[#E4DCCF] text-black font-bold py-2 px-4 rounded mx-auto">Add Company</Link>
         </div>
-
+      </div>
     </div>
-</template>
+  </template>
 
-<script setup>
-    import {Link} from '@inertiajs/inertia-vue3'
+  <script setup>
+    import ErrorDialog from '@/views/components/error-dialog.vue'
+    import { Link } from '@inertiajs/inertia-vue3'
+    import { ref, watchEffect, defineProps } from 'vue'
+    import ConfirmDialog from '@/views/components/confirm-dialog.vue'
+    import { useForm } from '@inertiajs/inertia-vue3'
+    import SuccessDialog from '@/views/components/success-dialog.vue'
 
-    defineProps({
-        'members': Array
+    const showConfirm = ref(false)
+    const showError = ref(false)
+    const showSuccess = ref(false)
+
+    const successMessage = ref('')
+    const errorMessage = ref('')
+
+    const form = useForm({
+      id: '',
+      name: '',
+      type: '',
+      address: '',
+      net_worth: '',
     })
-</script>
+
+    const deleteForm = useForm()
+
+    let selectedCompany = null
+    let selectedCompanyForDelete = null
+
+    const props = defineProps({
+      companies: Array,
+      users: Array,
+      errors: null,
+    })
+
+    const deleteConfirmed = ref(false)
+
+    function remove(company) {
+      selectedCompanyForDelete = company
+      showConfirm.value = true
+    }
+
+    function cancelDelete() {
+      showConfirm.value = false
+    }
+
+    async function deleteCompany() {
+      if (selectedCompanyForDelete !== null && selectedCompanyForDelete.id !== undefined) {
+        try {
+          await deleteForm.delete('/companies/' + selectedCompanyForDelete.id)
+          deleteConfirmed.value = true
+          showConfirm.value = false
+
+          // Handle success case in watchEffect
+        } catch (error) {
+          errorMessage.value = error.message
+          showConfirm.value = false
+          showError.value = true
+        }
+      }
+    }
+
+    function closeErrorDialog() {
+      showError.value = false
+      window.location.reload()
+    }
+
+    function closeSuccessDialog() {
+      showSuccess.value = false
+      window.location.reload()
+    }
+
+    watchEffect(() => {
+        if (deleteConfirmed.value == true) {
+            if (Object.keys(props.errors).length === 0) {
+            // Display SuccessDialog only when deleteConfirmed is true and there are no errors
+            showSuccess.value = true
+            successMessage.value = 'Company removed successfully'
+            showError.value = false // Ensure showError is set to false
+            } else if (props.errors && props.errors.GeneralErrors) {
+            // Display ErrorDialog only when deleteConfirmed is true and there is an error in props.errors.GeneralErrors
+            showSuccess.value = false // Ensure showSuccess is set to false
+            showError.value = true
+            errorMessage.value = props.errors.GeneralErrors
+            }
+        } else {
+            // Reset the dialogs
+            showSuccess.value = false
+            showError.value = false
+        }
+    });
+  </script>

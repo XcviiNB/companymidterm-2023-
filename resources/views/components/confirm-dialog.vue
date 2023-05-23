@@ -8,7 +8,7 @@
                 {{ message }}
             </div>
             <div class="flex justify-center space-x-2 mt-4">
-                <button class="bg-[#FAF0D8] rounded p-2 hover:bg-green-500" @click="$emit('confirm')">
+                <button class="bg-[#FAF0D8] rounded p-2 hover:bg-blue-400" @click="$emit('confirm')">
                     Confirm
                 </button>
                 <button class="bg-red-400 rounded p-2 hover:bg-red-500" @click="$emit('cancel')">

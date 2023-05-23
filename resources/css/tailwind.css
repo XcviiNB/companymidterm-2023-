@@ -5,17 +5,29 @@
 .overlay {
     background-color: #222;
     opacity: 0.85;
-    position: absolute;
+    position: fixed; /* Change 'absolute' to 'fixed' */
     top: 0;
     left: 0;
-    @apply min-h-full min-w-full
+    right: 0; /* Add 'right' property to cover the entire width */
+    bottom: 0; /* Add 'bottom' property to cover the entire height */
+    z-index: 9999; /* Ensure the overlay is above other elements */
 }
+
 .dialog-wrapper {
-    position: absolute;
-    top:0;
+    position: fixed; /* Change 'absolute' to 'fixed' */
+    top: 0;
     left: 0;
-    @apply min-h-full min-w-full flex justify-center items-center
+    right: 0;
+    bottom: 0;
+    display: flex; /* Change 'flex' to 'flex' */
+    justify-content: center; /* Change 'justify-center' to 'center' */
+    align-items: center; /* Change 'items-center' to 'center' */
+    z-index: 10000; /* Ensure the dialog wrapper is above the overlay */
 }
+
 .dialog-wrapper .dialog {
-    @apply bg-[#F9F5EB] p-4 rounded-lg min-w-[600px]
+    background-color: #F9F5EB;
+    padding: 4rem; /* Change 'p-4' to '4rem' or adjust as needed */
+    border-radius: 0.5rem; /* Change 'rounded-lg' to '0.5rem' or adjust as needed */
+    min-width: 600px;
 }

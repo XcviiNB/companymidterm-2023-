@@ -33,7 +33,7 @@ Route::group(['middleware'=>'auth'], function() {
     Route::get('/companies/create', [CompanyController::class, 'create']);
     Route::post('/companies', [CompanyController::class, 'store']);
     Route::get('/companies/edit/{company}', [CompanyController::class, 'edit']);
-    Route::put('/companies{company}', [CompanyController::class, 'update']);
+    Route::put('/companies/{company}', [CompanyController::class, 'update']);
     Route::delete('companies/{company}', [CompanyController::class, 'destroy']);
 
     Route::get('/members', [MemberController::class, 'index']);

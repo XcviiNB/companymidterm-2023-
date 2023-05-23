@@ -14,7 +14,7 @@
                 {{ message }}
             </div>
             <div class="flex justify-center space-x-2 mt-4">
-                <button class="bg-[#FAF0D8] rounded p-2 hover:bg-[#E4DCCF]" @click="$emit('confirm')">
+                <button class="bg-blue-300 rounded p-2 hover:bg-blue-400" @click="$emit('confirm')">
                     Okay
                 </button>
             </div>

@@ -55,14 +55,15 @@ class CompanyController extends Controller
     }
 
     public function destroy(Company $company) {
-        // if ($company->members && $company->members->count() > 0) {
-        //     return back()->withErrors(['GeneralErrors'=>"You cannot delete $company->members because it has {$company->members->count()} items."]);
-        // }
+        if ($company->members && $company->members->count() > 0) {
+            return back()->withErrors(['GeneralErrors' => "You cannot delete $company->name because it has {$company->members->count()} member(s)."]);
+        } else {
+            $company->delete();
 
-        $company->delete();
-
-        return back();
+            return back()->with('success', 'Company removed successfully');
+        }
     }
+
 
 
 }
